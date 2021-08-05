@@ -41,10 +41,35 @@ public class PalindromeTest {
      * @return returns true if a palindrome (ignoring whitespace and case sensitivity), false otherwise
      */
     private boolean isPalindrome(String s) {
+    	//not possible if null
+    	 if (s == null) {
+             throw new IllegalArgumentException();
+         }
+    	 //true if just one letter
+         if (s.length() == 1) {
+             return true;
+         }
+         //clear spaces and turn lowercase
+         s = s.toLowerCase().replaceAll("\\s", "");
+         //create two stacks, one stores all the other takes half
+         ArrayListStack<Character> stack1 = new ArrayListStack<>();
+         ArrayListStack<Character> stack2 = new ArrayListStack<>();
 
-        // TODO:
-        // Implement this method body using your ArrayListStack. Be mindful of your algorithm!
-        return false;
+         //puts the characters from the string into the first stack
+         for (int i = 0; i < s.length(); i++) {
+        	 stack1.push(s.charAt(i));
+         }
+       //puts half the characters from the first stack into the second stack
+         for (int i = 0; i <s.length()/2; i++) {
+        	 stack2.push(stack1.pop());
+         }
+
+         //odd case: pop the middle character as per instructions.
+         if (s.length() % 2 != 0) {
+        	 stack1.pop();
+         }
+         //if stack 1 is equal to stack 2 then that string is indeed a palindrome
+         return stack1.equals(stack2);
 
     } // End of method isPalindrome
 
